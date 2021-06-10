@@ -102,10 +102,10 @@ def player1(board):
         colX=(input("X: enter column "))
         
         if(rowX.isnumeric() and colX.isnumeric()):
-            rowX=int(rowX)
-            colX=int(colX)
+            rowX=int(rowX)-1
+            colX=int(colX)-1
             if(rowX>2 or rowX<0 or colX>2 or colX<0):
-                print("Only accept inputs from 0-2, enter again\n")
+                print("Only accept inputs from 1-3, enter again\n")
                 
             elif(board[rowX][colX]=="O" or board[rowX][colX]=="X"):
                 print("Space already occupied, enter again\n")
@@ -128,10 +128,10 @@ def player2(board):
         colO=(input("O: enter column "))
 
         if(rowO.isnumeric() and colO.isnumeric()):
-            rowO=int(rowO)
-            colO=int(colO)
+            rowO=int(rowO)-1
+            colO=int(colO)-1
             if(rowO>2 or rowO<0 or colO>2 or colO<0):
-                print("Only accept inputs from 0-2, enter again\n")
+                print("Only accept inputs from 1-3, enter again\n")
 
             elif(board[rowO][colO]=="O" or board[rowO][colO]=="X"):
                 print("Space already occupied, enter again\n")
