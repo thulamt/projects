@@ -1,6 +1,6 @@
 # Text Based Tic Tac Toe game
 # Author: Thulam Tran
-# Year 2020
+# Year 2021
 
 import random
 
