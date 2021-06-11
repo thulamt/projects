@@ -73,14 +73,54 @@ def fullBoard(board):
         return True
     return False
 
+def horizontalConnect(board, icon):
+    '''
+    (2-D List, icon) -> boolean
+    Preconditions: 2-D List size is 6x7 and objects within are either PLACEHOLDER string, "R", or "Y", icon is a character.
+    
+    Returns True if icon has horizontal connection of 4, False otherwise.
+    '''
+    for i in range(len(board)):
+        for j in range(0,4):
+            selection4=[board[i][j],board[i][j+1],board[i][j+2],board[i][j+3]]
+            if selection4.count(icon)==4:
+                return True
+    return False
+def verticalConnect(board, icon):
+    '''
+    (2-D List, icon) -> boolean
+    Preconditions: 2-D List size is 6x7 and objects within are either PLACEHOLDER string, "R", or "Y", icon is a character.
+    
+    Returns True if icon has vertical connection of 4, False otherwise.
+    '''
+    for i in range(7):
+        for j in range(0,3):
+            selection4=[board[j][i],board[j+1][i],board[j+2][i],board[j+3][i]]
+            if selection4.count(icon)==4:
+                return True
+    return False
+def checkConnect(board, icon):
+    '''
+    (2-D List, icon) -> boolean
+    Preconditions: 2-D List size is 6x7 and objects within are either PLACEHOLDER string, "R", or "Y", icon is a character.
+    
+    Returns True if icon has a connection of 4, False otherwise.
+    '''
+    if(horizontalConnect(board, icon) or verticalConnect(board, icon)):
+        print(icon,"WINNER")
+        print("GAME OVER")
+        return True
+    return False
+    
 
 board=initializeBoard()
 printBoard(board)
 done=False
 while not done:
     dropCounter(board,"RED","R")
-    if(fullBoard(board)):
+    if(checkConnect(board, "R") or fullBoard(board)):
         break
+
     dropCounter(board,"YELLOW","Y")
-    if(fullBoard(board)):
+    if(checkConnect(board, "Y") or fullBoard(board)):
         break
