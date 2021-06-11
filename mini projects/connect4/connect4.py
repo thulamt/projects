@@ -1,3 +1,7 @@
+# Text Based Connect 4 game
+# Author: Thulam Tran
+# Year 2021
+
 PLACEHOLDER="#"
 
 def initializeBoard():
@@ -56,9 +60,27 @@ def dropCounter(board,player,icon):
             i-=1
         printBoard(board)
 
+def fullBoard(board):
+    '''
+    (2-D List) -> boolean
+    Preconditions: 2-D List size is 6x7 and objects within are either PLACEHOLDER string, "R", or "Y", icon is a character.
+    
+    Returns True if top row has no placeholders left, i.e. the board is full, False otherwise.
+    '''
+    if (board[0].count(PLACEHOLDER)==0):
+        print("BOARD IS FULL")
+        print("GAME OVER")
+        return True
+    return False
+
+
 board=initializeBoard()
 printBoard(board)
 done=False
 while not done:
     dropCounter(board,"RED","R")
+    if(fullBoard(board)):
+        break
     dropCounter(board,"YELLOW","Y")
+    if(fullBoard(board)):
+        break
