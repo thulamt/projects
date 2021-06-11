@@ -2,6 +2,8 @@
 # Author: Thulam Tran
 # Year 2021
 
+import random
+
 PLACEHOLDER="#"
 
 def initializeBoard():
@@ -17,6 +19,7 @@ def initializeBoard():
 def printBoard(board):
     for i in range(len(board)):
         print(board[i])
+    print("")
 
 def inputCol(player):
     '''
@@ -48,11 +51,11 @@ def dropCounter(board,player,icon):
     '''
     done=False
     while not done:
-        colRed=inputCol(player)
+        col=inputCol(player)
         i=len(board)-1
         while i>=0:
-            if(board[i][colRed]==PLACEHOLDER):
-                board[i][colRed]=icon
+            if(board[i][col]==PLACEHOLDER):
+                board[i][col]=icon
                 done=True
                 break
             if(i==0):
@@ -99,6 +102,7 @@ def verticalConnect(board, icon):
             if selection4.count(icon)==4:
                 return True
     return False
+    
 def diagonalConnect(board, icon):
     '''
     (2-D List, icon) -> boolean
@@ -131,16 +135,88 @@ def checkConnect(board, icon):
         print("GAME OVER")
         return True
     return False
+
+def connect4():
+    '''
+    () -> None
     
+    Game select for Connect 4 game.
+    '''
+    print("Connect 4 Game by Thulam T.\n")
+    end=False
+    while not end:
+        gameSelect=input("Enter A for 1 player mode, enter B for 2 player mode, otherwise enter anything else to quit game: ").upper()
+        if (gameSelect=="A"):
+            print("ONE PLAYER MODE\n")
+            onePlayer()
+            end=True
+        elif(gameSelect=="B"):
+            print("TWO PLAYER MODE\n")
+            twoPlayers()
+            end=True
+        else:
+            end=True
 
-board=initializeBoard()
-printBoard(board)
-done=False
-while not done:
-    dropCounter(board,"RED","R")
-    if(checkConnect(board, "R") or fullBoard(board)):
-        break
+def onePlayer():
+    '''
+    () -> None
+    
+    1 Player Connect 4 game.
+    '''
+    board=initializeBoard()
+    printBoard(board)
+    done=False
+    while not done:
+        dropCounter(board,"RED","R")
+        if(checkConnect(board, "R") or fullBoard(board)):
+            break
 
-    dropCounter(board,"YELLOW","Y")
-    if(checkConnect(board, "Y") or fullBoard(board)):
-        break
+        cpuDone=False
+        while not cpuDone:
+            col=random.randint(0,6)
+            i=len(board)-1
+            while i>=0:
+                if(board[i][col]==PLACEHOLDER):
+                    board[i][col]="Y"
+                    cpuDone=True
+                    break
+                i-=1
+        printBoard(board)
+        if(checkConnect(board, "Y") or fullBoard(board)):
+            break
+
+def twoPlayers():
+    '''
+    () -> None
+    
+    2 Player Connect 4 game.
+    '''
+    board=initializeBoard()
+    printBoard(board)
+    done=False
+    while not done:
+        dropCounter(board,"RED","R")
+        if(checkConnect(board, "R") or fullBoard(board)):
+            break
+
+        dropCounter(board,"YELLOW","Y")
+        if(checkConnect(board, "Y") or fullBoard(board)):
+            break
+
+def play():
+    '''
+    () -> None
+    
+    Replay or quit Connect 4 game.
+    '''
+    end=False
+    while not end:
+        gameEnd=input("Do you still want to keep playing? Enter Y for yes, otherwise enter anything else to quit game: ").upper()
+        if (gameEnd=="Y"):
+            connect4()
+        else:
+            print("Thanks for playing!")
+            end=True
+            
+connect4()
+play()
