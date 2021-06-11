@@ -99,6 +99,26 @@ def verticalConnect(board, icon):
             if selection4.count(icon)==4:
                 return True
     return False
+def diagonalConnect(board, icon):
+    '''
+    (2-D List, icon) -> boolean
+    Preconditions: 2-D List size is 6x7 and objects within are either PLACEHOLDER string, "R", or "Y", icon is a character.
+    
+    Returns True if icon has diagonal connection of 4, False otherwise.
+    '''
+    for i in range(3):
+        for j in range(6,2,-1):
+            leftSelection4=[board[i][j],board[i+1][j-1],board[i+2][j-2],board[i+3][j-3]]
+            if leftSelection4.count(icon)==4:
+                return True
+
+    for x in range(3):
+        for y in range(0,4):
+            rightSelection4=[board[x][y],board[x+1][y+1],board[x+2][y+2],board[x+3][y+3]]
+            if rightSelection4.count(icon)==4:
+                return True
+    return False
+
 def checkConnect(board, icon):
     '''
     (2-D List, icon) -> boolean
@@ -106,7 +126,7 @@ def checkConnect(board, icon):
     
     Returns True if icon has a connection of 4, False otherwise.
     '''
-    if(horizontalConnect(board, icon) or verticalConnect(board, icon)):
+    if(horizontalConnect(board, icon) or verticalConnect(board, icon) or diagonalConnect(board, icon)):
         print(icon,"WINNER")
         print("GAME OVER")
         return True
