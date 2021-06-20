@@ -44,16 +44,14 @@ def onePlayer():
     done=False
     while not done:
         player1(board)
-                
         printBoard(board)
-        if(validateBoard(board)):
+        if(validateBoard(board, False)):
             done=True
             break
 
         cpu(board)
-
         printBoard(board)
-        if(validateBoard(board)):
+        if(validateBoard(board, False)):
             done=True
             break
         
@@ -70,14 +68,14 @@ def twoPlayers():
         player1(board)
                 
         printBoard(board)
-        if(validateBoard(board)):
+        if(validateBoard(board, False)):
             done=True
             break
 
         player2(board)
         printBoard(board)
         
-        if(validateBoard(board)):
+        if(validateBoard(board, False)):
             done=True
             break
         
@@ -135,37 +133,67 @@ def player2(board):
             print("Invalid characters, only digits from 1-3, enter again\n")
 
 def cpu(board):
+    '''
+    (2-D List) -> None
+    Preconditions: 2-D List size is 3x3 and objects within are either placeholder() string, "O", or "X"
+    
+    CPU A.I. for tic tac toe. Checks all available spaces, if there is a winning space, then the CPU chooses that spot. Otherwise picks randomly.
+    '''
     oCheck=True
     while oCheck:
-        rowO=random.randint(0,2)
-        colO=random.randint(0,2)
-        if(board[rowO][colO]==placeholder()):
+        for i in range(len(board)):
+            if(not oCheck):
+                break
+            for j in range(len(board[i])):
+                if(not oCheck):
+                    break
+                testBoardO=board.copy()
+                if(testBoardO[i][j]==placeholder()):
+                    testBoardO[i][j]="O"
+                    testBoardX=board.copy()
+                    testBoardX[i][j]="X"
+                    if(validateBoard(testBoardO, True) or validateBoard(testBoardX, True)):
+                        board[i][j]="O"
+                        oCheck=False
+                        break
+                    else:
+                        testBoardO[i][j]=placeholder()
+                        testBoardX[i][j]=placeholder()
+        if(oCheck):
+            rowO=random.randint(0,2)
+            colO=random.randint(0,2)
+            if(board[rowO][colO]==placeholder()):
                 board[rowO][colO]="O"
                 oCheck=False
 
-def validateBoard(board):
+def validateBoard(board, silent):
     '''
-    (2-D List) -> boolean
+    (2-D List, boolean) -> boolean
     Preconditions: 2-D List size is 3x3 and objects within are either placeholder() string, "O", or "X"
     
-    Returns True if board is is filled or a player has a line of 3, returns False otherwise.
+    Returns True if board is is filled or a player has a line of 3, returns False otherwise. If silent, does not print winner.
     '''
     for i in range(len(board)):
         if(board[i][0] != placeholder() and board[i][0]==board[i][1] and board[i][0]==board[i][2] and board[i][1]==board[i][2]):
-            print ("WINNER "+board[i][0])
+            if(not silent):
+                print ("WINNER "+board[i][0])
             return True
         elif(board[0][i] != placeholder() and board[0][i]==board[1][i] and board[0][i]==board[2][i] and board[1][i]==board[2][i]):
-            print ("WINNER "+board[0][i])
+            if(not silent):
+                print ("WINNER "+board[0][i])
             return True
         elif(i==len(board)-1 and board[1][1]!=placeholder()):
             if(board[0][0]==board[1][1] and board[0][0]==board[2][2] and board[1][1]==board[2][2]):
-                print ("WINNER "+board[0][0])
+                if(not silent):
+                    print ("WINNER "+board[0][0])
                 return True
             elif(board[0][2]==board[1][1] and board[0][2]==board[2][0] and board[1][1]==board[2][0]):
-                print ("WINNER "+board[0][2])
+                if(not silent):
+                    print ("WINNER "+board[0][2])
                 return True
     if (fullBoard(board)):
-        print ("TIE")
+        if(not silent):
+            print ("TIE")
         return True
     
     return False
@@ -191,7 +219,7 @@ def fullBoard(board):
     '''
     row0 = ( board[0][0]=="X" or  board[0][0]=="O")  and ( board[0][1]=="X" or  board[0][1]=="O") and ( board[0][2]=="X" or  board[0][2]=="O")
     row1 = ( board[1][0]=="X" or  board[1][0]=="O")  and ( board[1][1]=="X" or  board[1][1]=="O") and ( board[1][2]=="X" or  board[1][2]=="O")
-    row2 = ( board[2][0]=="X" or  board[2][0]=="O")  and ( board[1][1]=="X" or  board[1][1]=="O") and ( board[1][2]=="X" or  board[1][2]=="O")
+    row2 = ( board[2][0]=="X" or  board[2][0]=="O")  and ( board[2][1]=="X" or  board[2][1]=="O") and ( board[2][2]=="X" or  board[2][2]=="O")
     return (row0 and row1 and row2)
 
 def play():
