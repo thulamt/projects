@@ -50,17 +50,9 @@ def onePlayer():
             done=True
             break
 
-        oCheck=True
-        while oCheck:
-            rowO=random.randint(0,2)
-            colO=random.randint(0,2)
-
-            if(board[rowO][colO]==placeholder()):
-                board[rowO][colO]="O"
-                oCheck=False
+        cpu(board)
 
         printBoard(board)
-        
         if(validateBoard(board)):
             done=True
             break
@@ -142,6 +134,15 @@ def player2(board):
         else:
             print("Invalid characters, only digits from 1-3, enter again\n")
 
+def cpu(board):
+    oCheck=True
+    while oCheck:
+        rowO=random.randint(0,2)
+        colO=random.randint(0,2)
+        if(board[rowO][colO]==placeholder()):
+                board[rowO][colO]="O"
+                oCheck=False
+
 def validateBoard(board):
     '''
     (2-D List) -> boolean
@@ -169,7 +170,6 @@ def validateBoard(board):
     
     return False
 
-
 def printBoard(board):
     '''
     (2-D List) -> None
@@ -193,7 +193,6 @@ def fullBoard(board):
     row1 = ( board[1][0]=="X" or  board[1][0]=="O")  and ( board[1][1]=="X" or  board[1][1]=="O") and ( board[1][2]=="X" or  board[1][2]=="O")
     row2 = ( board[2][0]=="X" or  board[2][0]=="O")  and ( board[1][1]=="X" or  board[1][1]=="O") and ( board[1][2]=="X" or  board[1][2]=="O")
     return (row0 and row1 and row2)
-
 
 def play():
     '''
