@@ -4,13 +4,7 @@
 
 import random
 
-def placeholder():
-    '''
-    () -> string
-    
-    Returns placeholder string.
-    '''
-    return "#"
+PLACEHOLDER="#"
 
 def tictactoe():
     '''
@@ -39,7 +33,7 @@ def onePlayer():
     
     1 Player Tic Tac Toe game.
     '''
-    board=[[placeholder(),placeholder(),placeholder()], [placeholder(),placeholder(),placeholder()], [placeholder(),placeholder(),placeholder()]]
+    board=initBoard()
     printBoard(board)
     done=False
     while not done:
@@ -61,7 +55,7 @@ def twoPlayers():
     
     2 Player Tic Tac Toe game.
     '''
-    board=[[placeholder(),placeholder(),placeholder()],[placeholder(),placeholder(),placeholder()],[placeholder(),placeholder(),placeholder()]]
+    board=initBoard()
     printBoard(board)
     done=False
     while not done:
@@ -82,7 +76,7 @@ def twoPlayers():
 def player1(board):
     '''
     (2-D List) -> None
-    Preconditions: 2-D List size is 3x3 and objects within are either placeholder() string, "O", or "X"
+    Preconditions: 2-D List size is 3x3 and objects within are either PLACEHOLDER string, "O", or "X"
     
     Drawing X on 3x3 board.
     '''
@@ -108,7 +102,7 @@ def player1(board):
 def player2(board):
     '''
     (2-D List) -> None
-    Preconditions: 2-D List size is 3x3 and objects within are either placeholder() string, "O", or "X"
+    Preconditions: 2-D List size is 3x3 and objects within are either PLACEHOLDER string, "O", or "X"
     
     Drawing O on 3x3 board.
     '''
@@ -135,7 +129,7 @@ def player2(board):
 def cpu(board):
     '''
     (2-D List) -> None
-    Preconditions: 2-D List size is 3x3 and objects within are either placeholder() string, "O", or "X"
+    Preconditions: 2-D List size is 3x3 and objects within are either PLACEHOLDER string, "O", or "X"
     
     CPU A.I. for tic tac toe. Checks all available spaces, if there is a winning space, then the CPU chooses that spot. Otherwise picks randomly.
     '''
@@ -148,7 +142,7 @@ def cpu(board):
                 if(not oCheck):
                     break
                 testBoardO=board.copy()
-                if(testBoardO[i][j]==placeholder()):
+                if(testBoardO[i][j]==PLACEHOLDER):
                     testBoardO[i][j]="O"
                     testBoardX=board.copy()
                     testBoardX[i][j]="X"
@@ -157,32 +151,40 @@ def cpu(board):
                         oCheck=False
                         break
                     else:
-                        testBoardO[i][j]=placeholder()
-                        testBoardX[i][j]=placeholder()
+                        testBoardO[i][j]=PLACEHOLDER
+                        testBoardX[i][j]=PLACEHOLDER
         if(oCheck):
             rowO=random.randint(0,2)
             colO=random.randint(0,2)
-            if(board[rowO][colO]==placeholder()):
+            if(board[rowO][colO]==PLACEHOLDER):
                 board[rowO][colO]="O"
                 oCheck=False
+
+def initBoard():
+    '''
+    () -> 2-D List
+    
+    Returns 3x3 list full of PLACEHOLDER characters.
+    '''
+    return [[PLACEHOLDER,PLACEHOLDER,PLACEHOLDER], [PLACEHOLDER,PLACEHOLDER,PLACEHOLDER], [PLACEHOLDER,PLACEHOLDER,PLACEHOLDER]]
 
 def validateBoard(board, silent):
     '''
     (2-D List, boolean) -> boolean
-    Preconditions: 2-D List size is 3x3 and objects within are either placeholder() string, "O", or "X"
+    Preconditions: 2-D List size is 3x3 and objects within are either PLACEHOLDER string, "O", or "X"
     
     Returns True if board is is filled or a player has a line of 3, returns False otherwise. If silent, does not print winner.
     '''
     for i in range(len(board)):
-        if(board[i][0] != placeholder() and board[i][0]==board[i][1] and board[i][0]==board[i][2] and board[i][1]==board[i][2]):
+        if(board[i][0] != PLACEHOLDER and board[i][0]==board[i][1] and board[i][0]==board[i][2] and board[i][1]==board[i][2]):
             if(not silent):
                 print ("WINNER "+board[i][0])
             return True
-        elif(board[0][i] != placeholder() and board[0][i]==board[1][i] and board[0][i]==board[2][i] and board[1][i]==board[2][i]):
+        elif(board[0][i] != PLACEHOLDER and board[0][i]==board[1][i] and board[0][i]==board[2][i] and board[1][i]==board[2][i]):
             if(not silent):
                 print ("WINNER "+board[0][i])
             return True
-        elif(i==len(board)-1 and board[1][1]!=placeholder()):
+        elif(i==len(board)-1 and board[1][1]!=PLACEHOLDER):
             if(board[0][0]==board[1][1] and board[0][0]==board[2][2] and board[1][1]==board[2][2]):
                 if(not silent):
                     print ("WINNER "+board[0][0])
@@ -201,7 +203,7 @@ def validateBoard(board, silent):
 def printBoard(board):
     '''
     (2-D List) -> None
-    Preconditions: 2-D List size is 3x3 and objects within are either placeholder() string, "O", or "X"
+    Preconditions: 2-D List size is 3x3 and objects within are either PLACEHOLDER string, "O", or "X"
     
     Prints board rows one by one.
     '''
@@ -213,7 +215,7 @@ def printBoard(board):
 def fullBoard(board):
     '''
     (2-D List) -> boolean
-    Preconditions: 2-D List size is 3x3 and objects within are either placeholder() string, "O", or "X"
+    Preconditions: 2-D List size is 3x3 and objects within are either PLACEHOLDER string, "O", or "X"
     
     Returns True if board is is filled with either "X" or "O", returns False otherwise.
     '''
