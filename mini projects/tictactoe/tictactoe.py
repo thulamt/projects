@@ -238,6 +238,4 @@ def play():
         else:
             print("Thanks for playing!")
             end=True
-            
-tictactoe()
-play()
+
